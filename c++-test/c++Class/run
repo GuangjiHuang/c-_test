@@ -1,0 +1,29 @@
+#! /bin/bash
+clear
+file_name=${1%.*}
+file_type=${1#*.}
+#print the message
+echo "the file_name is ${file_name}"
+echo "the file_type is ${file_type}"
+if [ $file_type == "cpp" ]; then
+    compiler_type="g++"
+    flag=$($compiler_type $1 -o ${file_name}.exe)
+elif [ $file_type == "c" ]; then
+    compiler_type="gcc"
+    flag=$($compiler_type $1 -o ${file_name}.exe)
+else
+    exit
+fi
+# compiler 
+#flag=$($compiler_type $1 -o ${file_name}.exe -std=c++11)
+# show the compiler result
+if [ -z $flag ]; then
+    echo "Complier successfully!"
+else
+    echo "Complier fail!"
+fi
+# and then run it
+if [ -n ${flag} ]; then
+    echo "********************RUNNing*************************"
+    ./${file_name}.exe
+fi
