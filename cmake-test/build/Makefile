@@ -57,10 +57,10 @@ RM = /usr/bin/cmake.exe -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /cygdrive/c/Users/97682/Desktop/temp/cmake_test
+CMAKE_SOURCE_DIR = /cygdrive/c/Users/97682/Desktop/temp/cmake-test
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /cygdrive/c/Users/97682/Desktop/temp/cmake_test/build
+CMAKE_BINARY_DIR = /cygdrive/c/Users/97682/Desktop/temp/cmake-test/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /cygdrive/c/Users/97682/Desktop/temp/cmake_test/build/CMakeFiles /cygdrive/c/Users/97682/Desktop/temp/cmake_test/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /cygdrive/c/Users/97682/Desktop/temp/cmake-test/build/CMakeFiles /cygdrive/c/Users/97682/Desktop/temp/cmake-test/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /cygdrive/c/Users/97682/Desktop/temp/cmake_test/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /cygdrive/c/Users/97682/Desktop/temp/cmake-test/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -129,20 +129,29 @@ hello/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/hello.dir/build.make CMakeFiles/hello.dir/build
 .PHONY : hello/fast
 
-# target to build an object file
-main_1.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/hello.dir/build.make CMakeFiles/hello.dir/main_1.o
+main_1.o: main_1.cpp.o
 .PHONY : main_1.o
 
-# target to preprocess a source file
-main_1.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/hello.dir/build.make CMakeFiles/hello.dir/main_1.i
+# target to build an object file
+main_1.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hello.dir/build.make CMakeFiles/hello.dir/main_1.cpp.o
+.PHONY : main_1.cpp.o
+
+main_1.i: main_1.cpp.i
 .PHONY : main_1.i
 
-# target to generate assembly for a file
-main_1.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/hello.dir/build.make CMakeFiles/hello.dir/main_1.s
+# target to preprocess a source file
+main_1.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hello.dir/build.make CMakeFiles/hello.dir/main_1.cpp.i
+.PHONY : main_1.cpp.i
+
+main_1.s: main_1.cpp.s
 .PHONY : main_1.s
+
+# target to generate assembly for a file
+main_1.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hello.dir/build.make CMakeFiles/hello.dir/main_1.cpp.s
+.PHONY : main_1.cpp.s
 
 # Help Target
 help:

@@ -10,4 +10,7 @@ int main()
 
 
     return 0;
+
 }
+/* the test: xx xxx xx x xxxxx hellxxx xxx hello the world */
+/* My name is HuangGuangji. What is your name, guy? Hi.
