@@ -1,0 +1,59 @@
+/* test the. change the word1. word2 to the word1. word2; */
+Note: 
+the search command: /\v([0-9a-zA-Z]{1})\.([0-9a-zA-Z]{1})
+: 
+-> The wrong:
+
+Hello. world. Hi. How are you. Thanks!
+Hello, world. Hi. How are you ?Thanks!
+
+-> The right:
+Hello, world. Hi! How are you? Thanks!
+
+hello. world. the. name. is. what. hello. go
+hello. world. the. name. is. what. hello. go
+
+Escalators can be found everywhere in modern cities, bringing convenience to people's 
+lives. With the gradual increase of high-rise buildings and the steady improvement of grades in 
+today's era, it is not only required that elevators be fast and comfortable when they are boarding, 
+but people are increasingly demanding for the safety and reliability of elevators, and escalators 
+are also developing in an intelligent direction. 
+Based on Jetson Xavier embedded equipment, this thesis has developed an intelligent video 
+surveillance system for escalators. The system analyzes the images collected by the cameras 
+taken from three different directions to complete the detection and tracking of passenger heads 
+and large items on the escalator floor, as well as the extraction and tracking of the passenger 
+skeleton on the escalator. On the basis of this, the functions of passenger flow statistics, pas-
+senger retrograde detection, passenger congestion detection, passenger behavior recognition, 
+and large item retention detection are realized. The main work of this thesis includes the fol-
+lowing four aspects: 
+1)Passenger head and large items detection: After comparing the advantages, disadvantages 
+and limitations of traditional foreground extraction methods, machine learning and deep learn-
+ing methods, YOLOv3-tiny was finally selected as the passenger head detection method, and 
+KNN background modeling algorithm combined with KD tree algorithm was selected to detect 
+large items. 
+2) Passenger head and large items tracking in overhead scenes: After comparing various 
+tracking methods, Kalman filtering is used to perform motion estimation on the passenger's 
+head, and the Hungarian matching algorithm is used to match the rectangular frame intersection 
+matrix of the tracking result and detection result to match the passenger head. Hungarian match-
+ing algorithm is used to match large items in adjacent frames to achieve large item tracking. 
+Based on the tracking results, the behavior of passengers and items on the escalator floor is 
+detected, including passenger flow statistics, passenger retrograde, passenger detention, pas-
+senger congestion, and large item detention. 
+
+*** the use of the @:
+@ add the register:
+@ + a : the macro;
+the number 0  - 9: a - z: " . = * +;
+@+: @number
+@alpha
+@"
+@=
+@*
+@: execute the contents of register [count] times. Note that register '%' (name of the current file)
+end #(name of the alternate file) cannot be used.
+3
+
+the register: 
+: -> the last command to record;
+@@: -> repeat the @xxx command;
+@: -> repeat the prvious ex command;

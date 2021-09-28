@@ -1,0 +1,196 @@
+一、前言
+扶梯是指带有扶手护栏的自动楼梯，也称为自动扶梯、手扶电梯、电扶梯等。它是一种带有循环运转梯级的朝上或朝下倾斜运输乘客的电力驱动装置。扶梯占用空间较大，运行速度较慢，不像垂直电梯那样能够使乘客快速上升或下降几十层楼，但它连续工作，运输量大，适合提供短距离运输且具有很高的负载率。扶梯以其安全稳定、运输量大、便捷使用等特点而广泛应用于地铁站、火车站、商场、大厦等人流量大的公共场合。如图x所示，为实际应用场景中的扶梯
+ 
+图x 扶梯应用场景
+随着科学技术水平的快速提高，社会对公共安全防控的要求越来越高，特别是在当前复杂多变的国际形势和国内公共安全事件频发的情况下，任务更加艰巨[1][1-3]。电梯作为一种运输设备，可以从斜下至斜上循环往复运送乘客，广泛应用在商场、地铁站、办公楼等公共场所，便捷人民的出行情况。然而，随着扶梯的广泛使用，出现了各种乘客安全事故问题，在提高乘客安全意识的同时，需要监控扶梯以及时制止安全事故的发生，除此之外，也需要通过监控扶梯有无乘客来避免扶梯无人空转以节省能源和延长扶梯寿命，以及统计扶梯客流情况实现精细化管理。
+近年来，人们在搭乘扶梯时的各种不安全的行为，导致在扶梯上安全事故时常有发生。[2][5-3]特别是老人和小孩子等较为弱势的群体在搭乘电梯是，更容易遇到安全的隐患，稍微不注意，就可能会发生摔倒。同时，如果乘客在搭载扶梯时向外伸头，或者作出其它一些危险的动作，这些行为在快速移动的手扶电梯上都是十分危险的。为了避免上述安全事故的发生，需要实时监控扶梯区域，如果检测到隐患则发出警告或停运扶梯。传统的方法主要是通过人工监控，但是这种方法效率低下。一方面，扶梯在全天持续运载乘客，监控人员精力有限，不能每时每刻顾及和处理可能发生的突发事故。另一方面，人力成本高涨，监控人员往往要负责多路监控，很难顾及周全。
+借助计算机实现智能监控成为当前研究热点，智能监控系统根据摄像头采集到的图像，使用图像处理及计算机视觉算法，来协助监控人员在公共场合完成实时有效的监控。随着计算机技术、图形处理技术、以及嵌入式技术等相关技术的快速发展，智能视频监控系统（Intelligent Video Surveillance System）被越来越多应用于各种场合。为了处理海量的视频数据，缓解安防人员的视觉疲劳，视频监控技术智能化是未来研究的主流方向。智能视频监控系统的发展为解决扶梯的顺畅、安全等问题的解决提供了新的思路，因此有必要对扶梯进行智能视频监控。
+为了加强智慧城市的建设，针对手扶电梯上的安全隐患以及一些潜在商业价值，本综述将讨论手扶电梯的智能视频监控问题，涉及视频监控的内容以及智能系统的设计与实现。
+
+ 
+二、正文
+2.1 智能视频监控的历史发展
+智能视频监控技术可追溯至上世纪70年代，按发展阶段可分为三个阶段[3][6-3]。
+第一个阶段出现的主要是产生在 20 世纪 70 年代的模拟视频监控系统，该系统的核心技术是光学成像技术和电子技术。该时期诞生了摄像头电视墙等核心设备[4][7-3]，技术发展成熟，安装简便且价格便宜，适用于小规模的监控。但是局限于有线传输，同时图像质量也不高，故难以应用到大范围的监控场景中。 
+第二个阶段出现的主要是产生在 20 世纪 90 年代中期的数字视频监控系统，该系统的核心技术是数字压缩编码技术与芯片技术。该时期诞生了嵌入式硬盘录像机、视频服务器等核心设备，图像质量高且模块化管理好。但视频数据量庞大，故储存和使用都不方便。该阶段的数字技术为智能化技术的发展奠定了基础。 
+第三个阶段出现的主要是 2000 年左右诞生的智能视频监控系统，该系统的核心技术是计算机视觉和模式识别。通过背景建模、目标检测、目标跟踪等算法对视频帧进行分析后，可以有效分析出视频中的目标行为，从而解决监控中的问题[5][8-3]。智能分析算法对设备的图形计算能力要求较高，在近年，硬件设备计算能力得到飞速提升，计算力不足的问题也逐渐得到解决。 
+至今，已有较多智能视频监控系统被研发并投入使用，如中国科学院自动化研究所研发的用于监控的 Vstar 系统[6][9-3]、IBM 开发的用于数据管理和调查环境的 SSS（Smart Surveillance System）系统[7][10-3]、卡内基梅隆大学开发的用于军事的 VSAM（Visual Surveil-ilance and Monitoring）系统[8][11-3]、西门子开发的用于地铁站拥堵密度估计[9][12-3]的系统等。随着智能视频监控技术的日趋发展成熟，智能视频监控算法的结构一般自下而上可以分为两个部分，基层为对视频帧中的目标进行检测、跟踪、识别，而顶层包括对目标行为的进一步理解分析。
+2.2 视频目标检测算法的研究现状
+目标检测是指在图像中对目标进行分类并确定其位置的过程，是后续目标跟踪和行为识别的基础，根据技术发展可分为四类目标检测方法。
+第一类是基于前景提取的目标检测方法，该方法利用运动目标前景相对于图像背景的差异信息进行检测，可分为背景差分法、帧间差分法和光流法。背景差分法通过对图像背景建模获得运动前景，常用的背景建模方法有平均背景法[10][11-2]、码本法[11][12-2]、高斯混合模型法[12][13-2]、ViBe模型法[13][14-2]和隐马尔可夫模型法[14][15-2]等。帧间差分法通过对前后帧图像相减获得运动前景，可分为两帧差分、三帧差分、多帧差分及其变种方法[15][16]。光流法通过建立光流场，对具有相同运动矢量的像素进行合并进而得到运动前景，常用方法有Horn-Schunck方法[16][17-2]和Lucas-Kanade方法[17][18]。基于前景提取的方法计算简单，运算速度快，但提取出来的前景容易受外界干扰影响而支离破碎，需要通过后续的图像滤波和形态学操作根据实际情况进一步地处理，不利于工程项目的快速迭代开发。
+第二类是基于模板匹配的检测方法，该方法需要在图像中滑动提取候选目标区域，然后和预先制作好的模板进行匹配，计算两者之间的相似度并以此作为依据判定是否检测到目标[18][19]。模板一般可分为通用模板和可变模板，通用模板为直接在图像中截取得到的指定目标区域图像，该类模板制作简单，但是泛化性能不好，在实际应用中往往会因为目标扰动而导致检测失效，可变模板通过数学模型或能量函数进行构建，泛化性能好，能够适应实际过程中的目标扰动，但构建过程复杂，实时性较差。
+第三类是基于机器学习的目标检测方法，该方法以统计学习作为理论基础，以图像目标区域作为正样本，其他区域作为负样本，采集大量的正负样本来训练目标分类器，按流程可分为特征提取和分类器构建两个步骤。特征提取是指从正负训练样本中提取出人工设计的可抽象描述原始目标信息的特征，常用的特征有Haar特征[19][20]、局部二值模式特征(Local Binary Pattern, LBP)[20][21]、梯度方向直方图特征（Histogram of Oriented Gradient, HOG）[21][22]、可变形组件模型特征(Deformable Part Model, DPM)[22][23]、SIFT特征[23][24]、SURF特征[24][25]等，对这些常用特征进行合理地融合可提高特征提取的效果，如文献[25][26]通过融合HOG和LBP构建出一种新的特征，大大提高了人脸检测的准确率，常用的分类器模型有支持向量机(Support Vector Machine, SVM)[26][27]和AdaBoost[27][28]。
+第四类是基于深度学习的目标检测方法，该方法构建深度学习网络自动提取特征，不需要依靠经验来设计人工特征，其网络可分为基于候选区域的检测网络和基于单次回归的检测网络。R-CNN[28][29]是第一个具有应用价值的深度学习检测网络，其利用卷积神经网络(Convolutional Neural Network, CNN)[29][30]自动提取特征，采用选择性搜索(Selective earch, SS)[30][31]生成两千个候选区域，然后对这些区域进行分类和回归，在此基础上提出了Fast R-CNN[31][32]、Faster R-CNN[32][33]，不断地提高检测网络的实时性和准确性。为了更进一步地提高检测网路的实时性，SSD（Single Shot MultiBOx Detector)和YOLOv1[33][36-1]、YOLOv2[34][37-2]、YOLOv3[35][38-2]等深度学习检测网络相继提出，这些网络能够在一个步骤内通过单次回归得到目标的类别信息和位置信息，在牺牲些许精度的条下大大提高了检测实时性。
+2.3 视频目标跟踪算法的研究现状
+目标跟踪是指在图像中对首帧标记出的目标预测其在后续帧中位置的过程，跟踪与检测相辅相成，是进行视频监控的关键，与行为识别效果的好坏有着密切关系。目标跟踪方法根据跟踪方式可分成两大类。第一类是生成模型跟踪方法，该方法在已知当前帧目标位置的前提下，对目标区域进行数学建模，然后通过所建立的模型在下一帧图像中预测目标最有可能出现的位置作为跟踪结果，典型的生成模型跟踪方法有卡尔曼滤波[36][39-2]、中值流[37][40-2]、Mean-shift[38][41-2]、Camshift[39][42-2]等，其中ASMS在Mean-Shift跟踪框架中颜色信息的基础上加入了尺度估计信息[40][43-2]，取得了较好的跟踪效果。第二类是判别模型跟踪方法，该方法将跟踪与检测相结合，以当前帧目标区域作为正样本，目标周围局部背景作为负样本，训练分类器模型，然后通过训练好的模型，以上一帧目标为搜索中心在下一帧图像中寻找最佳的预测位置，经典的判别模型跟踪方法有Struck[41][44-2]、跟踪－学习－检测模型(Tracking-learning, TLD)[42][45-2]、CSK(Circularnt Structure with kernels)[43][46-2]、核相关滤波(Kernelized Correlation Filters, KCF)[44][47-2]、CN(Color Names)[45][48]等。相对于生成模型跟踪方法，判别模型跟踪方法在跟踪算法竞赛上取得了更优的成绩，凭借其优异的跟踪性能逐渐成为目前主流的跟踪方法。
+随着深度学习技术的快速发展，将深度学习与目标跟踪相结合以提高跟踪精度，成为了研宄的热点，DeepSRDCF[46][49-2]将判别模型跟踪过程中检测环节所需要提取的目标特征从人工设计的特征替换为深度学习自动生成的特征，COTURN[47][50]直接训练一个端到端的深度学习模型，输入前后帧的图像，输出预测的目标位置变化信息。上述目标跟踪方法的跟踪对象为通用目标，除此之外，特定目标跟踪和多目标跟踪也是当前的研宄热点。特定目标跟踪是针对人头[48][51-2]、人脸[49][52-2]等特定目标进行跟踪，可为特定目标训练检测器，通过目标检测来优化目标跟踪过程。多目标跟踪是对多个目标同时跟踪的过程，在对单个目标进行连续跟踪的基础上，还需要解决不同目标自身遮挡、相互遮挡、个体识别等问题[50][53-2]，是目标跟踪研宄领域中的难点。
+
+
+
+
+2.4 行为识别算法的研究现状
+人类行为识别是智能视频监控算法的顶层任务部分，通常结合了基层的检测以及跟踪的结果，从而来对人类的行为动作进行识别[51][56-3]。如今，人类行为识别算法可以根据特征的提取方式分为两类：传统行为识别算法和基于深度学习的行为识别算法。行为识别算法从 20 世纪 80 年代开始发展，传统方法主要利用特征提取方法有梯度统计[52][57-3]、全局滤波器[53][58-3]、深度图及骨架[54][59-3]等等。Fujiyoshi[55][60-3]提取视频帧行人的轮廓，并根据轮廓计算得到人体重心以及各枝干顶点，并将重心和顶点构成的矢量作为特征向量从而输入分类器来判断异常行为；Bobick[56][61-3]使用历史运动图和能量图来表示人体运动，并使用模板匹配的方式来识别异常行为；Zhang H B[57][62-3]使用光流特征得到行人运动信息来定位感兴趣区域，然后使用方向梯度以及光流直方图来提取出运动特征，最后使用支持向量机来对异常行为进行分类。这些传统方法大致均可以符合以下框架：先从空间以及运动的动作中提取局部统计信息，然后将这些信息作为视频的特征向量输入到分类器中进行动作识别。
+传统行为识别提取的特征对光照、遮挡等干扰因素鲁棒性不高，因此基于深度学习的行为识别算法应运而生。现在基于深度学习的行为识别算法主要有双流网络[58][63-3]、3D 卷积网络[59][64-3]、循环神经网络[60][65-3]、图卷积神经网络[61][66-3]等等。双流神经网络时间流卷积来提取光流特征，使用空间流卷积来提取空间特征，最后将两部分融合起来，Feichtenhofer[62][67-3]在双流网络的时间流和空间流中都加入残差结构[63][68-3]，使得双流网络能够更深；Wang[64][69-3]将双流网络的时间流划分为局部和全局两部分，形成三流网络，准确率比文献63稍高；Girdhar[65][70]提出 VLAD 池化，该池化能将视频的时域特征进一步压缩融合，能够很好地提取动作特征。3D 卷积网络使用三维卷积核来直接提取视频的时空特征进行行为识别。Tran[66][71]提出的 C3D 网络通过找到 3D 卷积核在时间维度的最佳长度，有效提取人的动作特征；随之，Tran[67][72]在 C3D 中引入残差结构，进一步提升了 C3D 的速度；Carreira[68][73]提出 I3D 网络，结合双流网络的思想并使用 Kinetics[69][74]数据集进行预训练，在 UCF-101[70][75]数据集上的准确率达到 97.9%。循环神经网络常用于对序列进行建模，因此可以将其用于提取人体的运动特征，Baccouche[71][76]将卷积扩充为 3D 的形式，学习到时间及空间特征后，使用 LSTM[72][77]来进一步学习人的行为特征从而进行行为识别；Donahue[73][78]使用 2D 卷积提取单帧特征，然后将特征按照时间顺序输入到 LSTM 中进行行为识别，在 UCF-101数据集上的准确率达到 82.92%；Wu[74][79]把双流网络和 LSTM 进行结合，将时间流与空间流所提取的特征一并输入 LSTM 中进行行为识别，在 UCF-101 数据集上的准确率达到90.1%。随着图形计算资源的提升和研究的深入，深度学习算法在行为识别中的准确率逐步提升。随着深度学习的进一步发展，基于骨架建模深度学习行为识别方法也不断涌现，JI[75][80]、ZHANG[76][81]使用循环神经网络，LI [77][82]、KE[78][83]使用时域卷积神经网络来提取骨架信息并对行为进行端到端识别。Yan [79][84]将骨架提取结果与图卷积神经网络结合起来对行为进行分类，相比之前的方法，在 Kinect 行为数据集上的识别率得到进一步提升，从此之后，图卷积神经网络被广泛应用到人类行为识别中。
+
+
+参考文献
+[1][1-3] 安芳. 人工智能引领安防智能化发展[N]. 建筑时报,2017-07-31(006).
+
+[2][5-3] 孙建安,袁敏琴,林祝君.自动扶梯安全事故分类及风险防范——电动扶梯安全事故风险防范与评估研究之一[J]. 北京政法职业学院学报,2017(02):100-105
+
+[3][6-3] 黄凯奇,陈晓棠,康运锋,谭铁牛.智能视频监控技术综述[J]. 计算机报,2015,38(06):1093-1118.
+
+[4][7-3] Lyon D. Surveillance studies: An overview[M]. Polity, 2007.
+
+[5][8-3] Haritaoglu I, Harwood D, Davis L S. W 4 S: A real-time system for detecting and trackingpeople in 2 1/2D[C]//European Conference on computer vision. Springer, Berlin, Heidel-berg, 1998: 877-892.
+
+[6][9-3] Huang K, Tan T. Vs-star: A visual interpretation system for visual surveillance[J]. Pattern Recognition Letters, 2010, 31(14): 2265-2285.
+
+[7][10-3] Tian Y, Brown L, Hampapur A, et al. IBM smart surveillance system (S3): event based video surveillance system with an open and extensible framework[J]. Machine Vision and Applications, 2008, 19(5-6): 315-327.
+
+[8][11-3] Collins R T, Lipton A J, Kanade T, et al. A system for video surveillance and monitoring[J]. VSAM final report, 2000, 2000: 1-68.
+
+[9][12-3] Paragios N, Ramesh V. A MRF-based approach for real-time subway monitoring[C]// Pro-ceedings of the 2001 IEEE Computer Society Conference on Computer Vision and Pattern Recognition. CVPR 2001. IEEE, 2001, 1: I-I.
+
+[10][11-2] 沈剑雷，夏定纯．基于改进背景差分法的运动物体检测的研究[J]．通信电源技术，2016, 33(2): 37-38 
+
+[11][12-2] 莫林，周赞，雷禹，等．基于YUV空间码本模型的运动检测[J]．计算机工程与应用，2012, 48(25): 180-183
+
+[12][13-2] 赵亚欣，蔡华杰，赵怀勋，等．基于改进髙斯混合模型的自适应前景提取[J]．计算机应用与软件，2016，33(11): 161-163
+
+[13][14-2] Barnich O, Droogenbroeck M V. ViBe: A Universal Background Subtraction Algorithm for Video Sequences[J]. IEEE Transactions on Image Processing, 2011,20(6):1709-1724
+
+[14][15-2] Liu Z, Huang K, Tan T. Cast shadow removal using MRF based on hierarchical information[J]. IEEE Transactions on Circuits and Systems for Video Technology(T-CSVT), 2012,22(1)):56-66
+
+[15][16] 赵婦，郑紫微．基于改进的帧间差分运动目标提取算法[J]．无线通信技术，2016(2): 46-49 
+
+[16][17-2] Meinhardtllopis E, Perez J S, Kondermann D. Horn-Schunck Optical Flow with a Multi-Scale Strategy[J]. Image Processing on Line, 2013,20: 151-172
+
+[17][18]Lucas B D, Kanade T. An iterative image registration technique with an application to stereo vision[A]. International Joint Conference on Artificail Interlligence[C]. Morgan: Kaufmann Publishers Inc, 1981:674-679
+
+[18][19] 田军委，牛秀娟，赵彦飞．基于动态模板匹配的运动目标识别[J]. 机械与电子, 2017, 35(1): 77-80
+
+[19][20]Papageorigiou C P, Oren M, Poggio T. A general framework for object detection[A]. Computer vision[C]. sixth international conference on IEEE, 1998:555-562
+
+[20][21]Ojala T, Pietikainen M, Maenpaa T. Multiresolution gray-scale and rotation invariant texture classification with local binary patterns[J]. IEEE Transactions on pattern analysis and machine intelligence, 2002,24(7):971-987
+
+[21][22]Dalal N, Triggs B. Histograms of oriented gradients for human detection[A]. Computer Vision and Pattern Recognition[C]. IEEE Computer Society Conference on, 2005:886-893
+
+[22][23]Felzenszwalb P F, Girshick R B, McAllester D, et al. Object detection with discriminatively trained part-based models[J]. IEEE transactions on pattern analysis and machine intelligence, 2010,32(9):1627-1645
+
+[23][24]Lowe D G. Distinctive image feature from scale-invariant keypoints[J]. International journal of computer vision,2004,60(2):91-11
+
+[24][25] Bay H, Ess A, Tuytelaars T, et al. Speeded-up robust featuers(SURF)[J]. Computer vision and image understanding, 2008,110(3):346-359
+
+
+[25][26]Wang X, Han T X, Yan S. An HOG-LBP human detector with partial occlusion handing[A]. IEEE, International Conference on Computer Vision[C]. IEEE, 2010:32-39
+
+[26][27]Coretes C, Vapnik V, Support-vector-networks[J]. Machine learning, 1995,20(3):273-297
+
+[27][28]Freund Y, Schapire R E. A decision-gheoretic generalization of on-line learning and an application to boosting[J]. Jouranl of computer and system scienes, 1997, 55(1):119-139
+
+[28][29]Girshick R, Donahue J, Darrell T, et al. Rich feature hierarchies for accurate object detection and semantic segmentation[A]. Proccedings of the IEEE conference on computer vision and pattern recognition[C].2014:580-587
+
+[29][30]Krizhevsky A, Sutskever I, Hinton G E. ImageNet classification with deep convolutional neural networks[A]. International Conference on Neural Information Processing System. Gurran Associates Inc[C].2012:1097-1105
+
+[30][31]Uijlings J R R, Van De Sande K E A, Gevers T, et al. Selective search for object recognition[J]. International journal of computer visioin, 2013, 104(2):154-171
+
+[31][32]Girshick R. Fast r-cnn[A]. Proceedings of the IEEE international conference on computer vision[C].2015:1440-1448
+
+[32][33]Ren S, He K, Girshick R, et al. Faster r-cnn: Towards real-time object detection with region proposal networks[A]. Advances in neural information processiong system[C].2015:91-99
+
+[33][36-2]Redmon J, Divvala S, Girshich R, et al. You only look once: Unified, real-time ojbect detection[A]. Proceedings of the IEEE conference on computer vision and pattern recognition[C]. 2016:779-788
+
+[34][37-2]Redmon J, Farhadi A. YOLO9000:better, faster, stronger[J].arXiv preprint, 2016, 1612
+
+[35][38-2]Redom J, Farhadi A. Yolov3: An incremental improvement[J]. arXiv preprint arXiv:1804.02767,2018
+
+[36][39-2]Kelly A.A 3D state formulation of a navigation Kalman filter for automomous vehicles[R]. CARNEGIE-MELLON UNIV PITTSBURGH POBOTICG INST, 1994
+
+[37][40-2]Del Moral P. Non-linear filtering: interacting particle resolution[J]. Markov processes and related fields, 1996,2(4):555-581
+
+[38][41-2]Cheng Y. Mean shift, mode seeking, and clustering[J]. IEEE transactions on pattern analysis and machine intelligence, 1995,17(8):790-799
+
+[39][42-2]Allen J G, Xu R Y D, Jin J S. Object tracking using camshift algorithm and multiple quantized feature spaces[A]. Proceedings of the Pan-Sygney area workshop on Visual information processing[C]. Inc: Australian Computer Society,2004:3-7
+
+[40][43-2]Vojir T, Noskova J, Matas J. Robust Scale-Adaptive Mean-Shift for Tracking[A]. Scandinavian Condrence on Image Analysis[C]. Berlin:Springer,2013:652-663
+
+[41][44-2]Hare S, Gobodetz S, Saffari A, et al. Struck: Stgructured ouput tracking with kernels[J]. IEEE transactions on pattern analysis and machine intelligence,2016,38(10):2096-2109
+
+[42][45-2]Kalal Z, Mikolajczyk K, Matas J. Tracking-learning-detection[J]. IEEE transactions on pattern analysis and machine intelligence, 2012,34(7):1409-1422
+
+[43][46-2]Henriques J F, Gaseiro R, martins P, et al. Expoiting the circulant structure of tracking-by-detection with kernels[A]. European conference on computer vision[C]. Berlin : Springer, 2012: 702-715
+
+[44][47-2]Henriques J F, Caseiro R, Martins P, et al. High-speed tracking with kernelized correlation filters[J]. IEEE Transactions on Pattern Analysis and Machine Intelligence, 2015,37(3):583-596
+
+[45][48]Danellgan M, Shahbaz Khan F, Felsberg M, et al. Adaptive color attribute for real-time visual tracking[A]. Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition[C]. 2014:1090-1097
+
+[46][49-2]Danelljan M, Hager G, Shahbaz F, et al. Convolutional features for correlation filter based visual tracking[A]. Proceedings of the IEEE International Conference on Computer Vision Workshops[C]. 2015: 58-66
+
+[47][50]Held D, Thrun S, Savarese S. Learning to track at 100 fps with deep regression networks[A]. European Conference on Computer Vision[C]. Cham: Springer, 2016: 749-765
+
+[48][51-2] 徐超，高梦珠，查宇锋，等．基于HOG和SVM的公交乘客人流量统计算法[J]．仪器仪表学报,2015,36(2):446-452
+
+[49][52-2] 杨超，蔡晓东，王丽娟，等．一种改进的CAMShift跟踪算法及人脸检测框架[J]．计算机工程与科学，2016,38(9): 1836-1869
+
+[50][53-2] 常发亮，马丽，乔谊正．视频序列中面向人的多目标跟踪算法[J]. 控制与决策，2007, 22(4): 418-422
+
+[51][56-3] 黄凯奇, 陈晓棠, 康运锋,等. 智能视频监控技术综述[J]. 计算机学报, 2015(06):3-28.
+
+[52][57-3] Klser A , Marszalek M , Schmid C . A spatio-temporal descriptor based on 3d-gradi-ents[C]// Proceedings of the British Machine Vision Conference 2008, Leeds, September 2008. 
+
+[53][58-3] Rodriguez M D, Ahmed J, Shah M. Action mach a spatio-temporal maximum average correlation height filter for action recognition[C]//2008 IEEE conference on computer vi-sion and pattern recognition. IEEE, 2008: 1-8.
+
+[54][59-3] Shotton J, Fitzgibbon A, Cook M, et al. Real-time human pose recognition in parts from single depth images[C]//CVPR 2011. Ieee, 2011: 1297-1304.
+
+[55][60-3] Fujiyoshi H , Lipton A J . Real-time human motion analysis by image skeleton-ization[C]// Fourth IEEE Workshop on Applications of Computer Vision Wacv. IEEE, 2002.
+
+[56][61-3] Bobick A F, Davis J W. The recognition of human movement using temporal templates[J]. IEEE Transactions on Pattern Analysis & Machine Intelligence, 2001 (3): 257-267.
+
+[57][62-3] Zhang H B, Li S Z, Guo F, et al. Real-time human action recognition based on shape combined  with  motion  feature[C]//2010  IEEE  International  Conference  on  Intelligent Computing and Intelligent Systems. IEEE, 2010, 3: 633-637.
+
+[58][63-3] Simonyan K, Zisserman A. Two-stream convolutional networks for action recognition in videos[C]//Advances in neural information processing systems. 2014: 568-576.
+
+[59][64-3] Ji S, Xu W, Yang M, et al. 3D convolutional neural networks for human action recog-nition[J]. IEEE transactions on pattern analysis and machine intelligence, 2012, 35(1): 221-231.
+
+[60][65-3] Graves A, Mohamed A, Hinton G. Speech recognition with deep recurrent neural networks [C]//2013 IEEE international conference on acoustics, speech and signal processing. IEEE, 2013: 6645-6649.
+
+[61][66-3] Bruna J, Zaremba W, Szlam A, et al. Spectral networks and locally connected networks on graphs[J]. arXiv preprint arXiv:1312.6203, 2013.
+
+[62][67-3] Feichtenhofer C, Pinz A, Wildes R P. Spatiotemporal residual networks for video action recognition. CoRR abs/1611.02155 (2016)[J]. arXiv preprint arXiv:1611.02155, 2016.
+
+[63][68-3] He K, Zhang X, Ren S, et al. Deep residual learning for image recognition[C]//Proceedings of the IEEE conference on computer vision and pattern recognition. 2016: 770-778.
+
+[64][69-3] Wang L, Ge L, Li R, et al. Three-stream CNNs for action recognition[J]. Pattern Recog-nition Letters, 2017, 92: 33-40.
+
+[65][70] Girdhar R, Ramanan D, Gupta A, et al. Actionvlad: Learning spatio-temporal aggregation for action classification[C]//Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2017: 971-980.
+
+[66][71] Tran D, Bourdev L, Fergus R, et al. Learning spatiotemporal features with 3d convolutional networks[C]//Proceedings of the IEEE international conference on computer vision. 2015: 4489-4497.
+
+[67][72] Tran D, Ray J, Shou Z, et al. Convnet architecture search for spatiotemporal feature learning[J]. arXiv preprint arXiv:1708.05038, 2017.
+
+[68][73] Carreira J, Zisserman A. Quo vadis, action recognition? a new model and the kinetics data-set[C]//proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2017: 6299-6308.
+
+[69][74] Kay W, Carreira J, Simonyan K, et al. The kinetics human action video dataset[J]. arXiv preprint arXiv:1705.06950, 2017.
+
+[70][75] Soomro K, Zamir A R, Shah M. UCF101: A dataset of 101 human actions classes from videos in the wild[J]. arXiv preprint arXiv:1212.0402, 2012.
+
+[71][76] Baccouche M, Mamalet F, Wolf C, et al. Sequential deep learning for human action recognition[C]//International  workshop  on  human  behavior  understanding.  Springer,  Berlin, Heidelberg, 2011: 29-39.
+
+[72][77] Hochreiter S, Schmidhuber J. Long short-term memory[J]. Neural computation, 1997, 9(8): 1735-1780.
+
+[73][78] Donahue J, Anne Hendricks L, Guadarrama S, et al. Long-term recurrent convolutional networks for visual recognition and description[C]//Proceedings of the IEEE conference on computer vision and pattern recognition. 2015: 2625-2634.
+
+[74][79] Wu Z, Wang X, Jiang Y G, et al. Modeling spatial-temporal clues in a hybrid deep learning framework for video classification[C]//Proceedings of the 23rd ACM international confer-ence on Multimedia. 2015: 461-470.
+
+[75][80] JI X, WANG C, LI Y, et al. Hidden markov model-based human action recognition using mixed features[J]. J. Comput. Inf. Syst, 2013, 9: 3659-3666.
+
+[76][81] ZHANG S, LIU X, XIAO J. On geometric features for skeleton-based action recognition using  multilayer  lstm  networks[C]//2017 IEEE Winter  Conference on Applications of Computer Vision (WACV). IEEE, 2017: 148-157.
+
+
+[77][82] LI C, ZHONG Q, XIE D, et al. Skeleton-based action recognition with convolutional neural networks[C]//2017 IEEE International Conference on Multimedia & Expo Workshops (ICMEW). IEEE, 2017: 597-600.
+
+[78][83] KE Q, Bennamoun M, An S, et al. A new representation of skeleton sequences for 3d action recognition[C]//Proceedings of the IEEE conference on computer vision and pattern recog-nition. 2017: 3288-3297.
+
+[79][84] Yan S, Xiong Y, Lin D. Spatial temporal graph convolutional networks for skeleton-based action recognition[C]// Thirty-Second AAAI Conference on artificial Intelligence. 2018.
+

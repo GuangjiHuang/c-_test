@@ -1,0 +1,58 @@
+To copy all lines containing a search pattern, use the following (see here). The first command clears register a (:help q). The second appends all matching lines to that register (:help quotea). The third copies register a to the clipboard (register +) for easy pasting into another application. Replace pattern with what you want to search for, or omit it (:g//y A) to use the last search.
+## you can use the command qxq to clear the content of the register;
+for example the qeq to clear the e's content.
+
+hello world
+
+the 
+the thing
+thing their
+
+let hits = []
+%s//\=len(add(hits, submatch(0))) ? 
+let reg = empty(a:reg) ? '+' : a:reg
+execute 'let @'. reg.' = join(hits, "\n") . "\n"
+;
+;
+pattern
+hao[12]
+[234]
+\v\[.{1,3}\]
+\v\[.{1,3}\]
+ns<t_ü>R=counter
+jj:let counter+=1
+
+ns<t_ü>R=counter
+jj:let counter+=1
+ns<t_ü>R=counter
+jj:let counter+=1
+
+10
+1
+1
+@=
+nihao
+***********  the file name" ************
+change_reference_number.vim
+copy_match.vim
+paper_sumary.txt
+paper_summary_bd_1.txt
+ref_record.txt
+test_1.txt
+test_2.txt
+
+Sun Sep 26 16:47:39 CST 2021
+/bin/bash: top: command not found
+/bin/bash: datef: command not found
+
+change_reference_number.vim
+copy_match.vim
+paper_sumary.txt
+paper_summary_bd_1.txt
+ref_record.txt
+test_1.txt
+test_2.txt
+nihao^M^J^J
+thing their
+https://www.brianstorti.com/vim-registers/
+

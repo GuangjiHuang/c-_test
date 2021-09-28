@@ -1,5 +1,4 @@
 #! /bin/bash
-
 # test the for usage
 for i in $(ls)
 do
